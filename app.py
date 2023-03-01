@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-from aws_cdk import core as cdk
+import os
+
+import aws_cdk as cdk
 from infra.infra_stack import InfraStack
 
 app = cdk.App()

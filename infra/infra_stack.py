@@ -1,33 +1,25 @@
 from aws_cdk import (
-    core as cdk,
+    Stack,
     aws_events_targets as targets,
     aws_events as events,
     aws_lambda as _lambda,
+    aws_lambda_python_alpha as _lambda_python
 )
+from constructs import Construct
 
-from aws_cdk.aws_lambda_python import PythonFunction
+class InfraStack(Stack):
 
-class InfraStack(cdk.Stack):
-
-    def __init__(self, scope: cdk.Construct, construct_id: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # The code that defines your stack goes here
         
-        # EASIER IF SIMPLE python function...
-        # my_function = _lambda.Function(self,
-        #     "my-function",
-        #     runtime=_lambda.Runtime.PYTHON_3_8,
-        #     code=_lambda.Code.asset("src"),
-        #     handler="main.handler"
-        # )
-
-        my_function = PythonFunction(self,
+        my_function = _lambda_python.PythonFunction(self,
             "my-function",
             entry="src",
             index="main.py",
             handler="handler",
-            runtime=_lambda.Runtime.PYTHON_3_8,
+            runtime=_lambda.Runtime.PYTHON_3_9,
         )
 
         rule = events.Rule(
