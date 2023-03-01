@@ -1,7 +1,12 @@
 import json
+from aws_lambda_powertools import Logger
+from aws_lambda_powertools.utilities.typing import LambdaContext
 
-def handler(event, context):
-    print("Foo!")
+logger = Logger()
+
+@logger.inject_lambda_context
+def handler(event: dict, context: LambdaContext) -> str:
+    logger.info("Foo!")
     
     return {
         'statusCode': 200,

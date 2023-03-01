@@ -6,10 +6,13 @@ authors = ["Jyrki Ahpola <jahpola@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 boto3 = "^1.17.26"
 
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.group.dev.dependencies]
+aws-lambda-powertools = {extras = ["aws-sdk"], version = "^2.9.1"}
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
