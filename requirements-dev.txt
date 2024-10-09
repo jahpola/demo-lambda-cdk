@@ -1,3 +1,4 @@
 pytest==8.3.3
+pytest-snapshot
 aws-lambda-powertools[aws-sdk]
 cdk-nag

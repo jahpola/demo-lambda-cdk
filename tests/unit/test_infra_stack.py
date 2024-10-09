@@ -1,28 +1,36 @@
 """ define tests """
 
+from json import dumps
+
 from cdk_nag import AwsSolutionsChecks
 from aws_cdk import (
     assertions,
     Aspects,
     App,
 )
-
-from infra.infra_stack import InfraStack
 import pytest
+from infra.infra_stack import InfraStack
 
-@pytest.fixture(scope="module",name="template")
+
+@pytest.fixture(scope="module", name="template")
 def setup_template():
-    """define a basic app """
+    """define a basic app"""
     app = App()
     stack = InfraStack(app, "teststack")
     template = assertions.Template.from_stack(stack)
     yield template
+
 
 def test_lambda_function_created(template):
     """test that lambda function is created"""
     template.has_resource_properties(
         "AWS::Lambda::Function", {"Handler": "main.handler", "Architectures": ["arm64"]}
     )
+
+
+def test_snapshot(template, snapshot):
+    """test that snapshot is correct"""
+    snapshot.assert_match(dumps(template.to_json()),"InfraStack.json")
 
 
 def test_solutions_checks():
