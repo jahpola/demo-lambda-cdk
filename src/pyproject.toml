@@ -6,7 +6,7 @@ authors = ["Jyrki Ahpola <jahpola@users.noreply.github.com>"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.12"
 boto3 = "^1.17.26"
 
 [tool.poetry.dev-dependencies]
