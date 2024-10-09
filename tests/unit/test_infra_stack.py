@@ -1,15 +1,28 @@
-import aws_cdk as core
-import aws_cdk.assertions as assertions
+""" define tests """
 
+import aws_cdk as core
+
+from cdk_nag import AwsSolutionsChecks
+
+from aws_cdk import (
+    assertions,
+    Aspects,
+)
 from infra.infra_stack import InfraStack
 
-# example tests. To run these tests, uncomment this file along with the example
-# resource in python_cdk/python_cdk_stack.py
-def test_sqs_queue_created():
+
+def test_lambda_function_created():
+    """test that lambda function is created"""
     app = core.App()
     stack = InfraStack(app, "teststack")
     template = assertions.Template.from_stack(stack)
 
-#     template.has_resource_properties("AWS::SQS::Queue", {
-#         "VisibilityTimeout": 300
-#     })
+    template.has_resource_properties(
+        "AWS::Lambda::Function", {"Handler": "main.handler", "Architectures": ["arm64"]}
+    )
+
+
+def test_solutions_checks():
+    """test that solutions checks are in place"""
+    app = core.App()
+    Aspects.of(app).add(AwsSolutionsChecks())
