@@ -50,12 +50,9 @@ class InfraStack(Stack):
             deploy_options=apigw.StageOptions(
                 stage_name="prod",
                 tracing_enabled=True,
-                logging_level=apigw.MethodLoggingLevel.INFO,
-                data_trace_enabled=True,
             ),
         )
 
-        lambda_integration = apigw.LambdaIntegration(demofunction,proxy=True)
-      
+        lambda_integration = apigw.LambdaIntegration(demofunction, proxy=True)
         api_resource = api.root.add_resource("demo")
         api_resource.add_method("POST", lambda_integration)
