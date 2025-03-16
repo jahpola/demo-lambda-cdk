@@ -47,12 +47,12 @@ class InfraStack(Stack):
             self,
             "demo-api",
             description="Demo API",
-            deploy_options=apigw.StageOptions(
-                stage_name="prod",
-                tracing_enabled=True,
-            ),
+            # deploy_options=apigw.StageOptions(
+            #     stage_name="prod",
+            #     tracing_enabled=True,
+            # ),
         )
 
         lambda_integration = apigw.LambdaIntegration(demofunction, proxy=True)
-        api_resource = api.root.add_resource("demo")
+        api_resource = api.root.add_resource("hello")
         api_resource.add_method("POST", lambda_integration)

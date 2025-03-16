@@ -8,7 +8,7 @@ logger = Logger()
 tracer = Tracer()
 app = APIGatewayRestResolver()
 
-@app.get("/hello")
+@app.post("/hello")
 @tracer.capture_method
 def hello() -> dict:
     """returns hello"""
@@ -17,5 +17,5 @@ def hello() -> dict:
 @tracer.capture_lambda_handler
 def handler(event: dict, context: LambdaContext) -> dict:
     """lambda handler"""
-    logger.debug("This is a log message")
+    logger.info("Start")
     return app.resolve(event, context)
