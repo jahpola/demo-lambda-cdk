@@ -1,13 +1,12 @@
-""" create cdk stacks """
+"""create cdk stacks"""
 
 from aws_cdk import (
     Aws,
     aws_logs,
     Stack,
-    aws_events_targets as targets,
-    aws_events as events,
     aws_lambda as _lambda,
     aws_lambda_python_alpha as _lambda_python,
+    aws_apigateway as apigw,
 )
 from constructs import Construct
 
@@ -23,7 +22,7 @@ class InfraStack(Stack):
         powertools_layer = _lambda.LayerVersion.from_layer_version_arn(
             self,
             id="lambda-powertools",
-            layer_version_arn=f"arn:aws:lambda:{Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-python312-arm64:2",
+            layer_version_arn=f"arn:aws:lambda:{Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-python313-arm64:10",
         )
 
         demofunction = _lambda_python.PythonFunction(
@@ -33,7 +32,7 @@ class InfraStack(Stack):
             index="main.py",
             handler="handler",
             architecture=_lambda.Architecture.ARM_64,
-            runtime=_lambda.Runtime.PYTHON_3_12,
+            runtime=_lambda.Runtime.PYTHON_3_13,
             layers=[powertools_layer],
             tracing=_lambda.Tracing.ACTIVE,
             memory_size=128,
@@ -44,12 +43,19 @@ class InfraStack(Stack):
             },
         )
 
-        rule = events.Rule(
+        api = apigw.RestApi(
             self,
-            "Rule",
-            schedule=events.Schedule.cron(
-                minute="/5", hour="*", month="*", week_day="MON-FRI", year="*"
+            "demo-api",
+            description="Demo API",
+            deploy_options=apigw.StageOptions(
+                stage_name="prod",
+                tracing_enabled=True,
+                logging_level=apigw.MethodLoggingLevel.INFO,
+                data_trace_enabled=True,
             ),
         )
 
-        rule.add_target(targets.LambdaFunction(demofunction))
+        lambda_integration = apigw.LambdaIntegration(demofunction,proxy=True)
+      
+        api_resource = api.root.add_resource("demo")
+        api_resource.add_method("POST", lambda_integration)
