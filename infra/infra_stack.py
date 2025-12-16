@@ -22,7 +22,7 @@ class InfraStack(Stack):
         powertools_layer = _lambda.LayerVersion.from_layer_version_arn(
             self,
             id="lambda-powertools",
-            layer_version_arn=f"arn:aws:lambda:{Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-python313-arm64:10",
+            layer_version_arn=f"arn:aws:lambda:{Aws.REGION}:017000801446:layer:AWSLambdaPowertoolsPythonV3-python314-arm64:18",
         )
 
         demofunction = _lambda_python.PythonFunction(
@@ -32,7 +32,7 @@ class InfraStack(Stack):
             index="main.py",
             handler="handler",
             architecture=_lambda.Architecture.ARM_64,
-            runtime=_lambda.Runtime.PYTHON_3_13,
+            runtime=_lambda.Runtime.PYTHON_3_14,
             layers=[powertools_layer],
             tracing=_lambda.Tracing.ACTIVE,
             memory_size=128,

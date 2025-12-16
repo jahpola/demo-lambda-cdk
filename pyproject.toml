@@ -1,0 +1,24 @@
+[project]
+name = "demo-lambda-cdk"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "aws-cdk-aws-lambda-python-alpha",
+    "aws-cdk-lib==2.232.2",
+    "constructs>=10.0.0,<11.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "aws-lambda-powertools[all]",
+    "cdk-nag",
+    "pytest==9.0.2",
+    "pytest-snapshot",
+    "ruff>=0.14.9",
+    "ty>=0.0.1a34",
+]
+
+[tool.ruff]
+line-length = 120
