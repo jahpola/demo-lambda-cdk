@@ -36,7 +36,6 @@ class InfraStack(Stack):
             layers=[powertools_layer],
             tracing=_lambda.Tracing.ACTIVE,
             memory_size=128,
-            log_retention=aws_logs.RetentionDays.ONE_DAY,
             environment={
                 "POWERTOOLS_SERVICE_NAME": "demo-function",
                 "POWERTOOLS_LOG_LEVE": "INFO",
