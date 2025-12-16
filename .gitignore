@@ -15,3 +15,6 @@ cdk.out
 
 # MAC
 .DS_Store
+
+# Ruff
+.ruff_cache

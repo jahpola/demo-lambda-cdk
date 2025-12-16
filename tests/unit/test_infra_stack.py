@@ -1,4 +1,4 @@
-""" define tests """
+"""define tests"""
 
 from json import dumps
 
@@ -23,14 +23,12 @@ def setup_template():
 
 def test_lambda_function_created(template):
     """test that lambda function is created"""
-    template.has_resource_properties(
-        "AWS::Lambda::Function", {"Handler": "main.handler", "Architectures": ["arm64"]}
-    )
+    template.has_resource_properties("AWS::Lambda::Function", {"Handler": "main.handler", "Architectures": ["arm64"]})
 
 
 def test_snapshot(template, snapshot):
     """test that snapshot is correct"""
-    snapshot.assert_match(dumps(template.to_json()),"InfraStack.json")
+    snapshot.assert_match(dumps(template.to_json()), "InfraStack.json")
 
 
 def test_solutions_checks():

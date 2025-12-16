@@ -1,4 +1,4 @@
-""" run cdk app """
+"""run cdk app"""
 
 #!/usr/bin/env python3
 import aws_cdk as cdk
