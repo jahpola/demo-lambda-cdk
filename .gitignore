@@ -18,3 +18,6 @@ cdk.out
 
 # Ruff
 .ruff_cache
+
+# PyCharm
+.idea
